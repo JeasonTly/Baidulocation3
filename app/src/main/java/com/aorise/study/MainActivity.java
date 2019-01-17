@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
+import com.aorise.autocompletesearch.SearchAdapter;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
        // datas = Arrays.asList(getResources().getStringArray(R.array.region));
         String[] datas = getResources().getStringArray(R.array.region);
         AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.auto);
-        mAutoCompleteTextView.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,datas));
+        mAutoCompleteTextView.setAdapter(new SearchAdapter<String>(this,android.R.layout.simple_list_item_1,datas,-1));
         mBaiduMap = mMapView.getMap();
 
         mBaiduMap.setMyLocationEnabled(true);
