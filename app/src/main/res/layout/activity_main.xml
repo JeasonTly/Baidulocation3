@@ -14,8 +14,8 @@
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/auto"
-        android:text="autocomplete" />
+        android:completionThreshold="1"
+        android:id="@+id/auto" />
 <com.baidu.mapapi.map.MapView
     android:layout_width="match_parent"
     android:layout_height="match_parent"

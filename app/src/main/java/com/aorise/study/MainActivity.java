@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
         mMapView = (MapView)findViewById(R.id.baidumap);
        // datas = Arrays.asList(getResources().getStringArray(R.array.region));
         String[] datas = getResources().getStringArray(R.array.region);
+        Log.d(this.getClass().getName(), "onCreate: datas "+datas.length);
         AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.auto);
         mAutoCompleteTextView.setAdapter(new SearchAdapter<String>(this,android.R.layout.simple_list_item_1,datas,-1));
         mBaiduMap = mMapView.getMap();
