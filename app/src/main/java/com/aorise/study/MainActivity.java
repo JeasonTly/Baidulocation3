@@ -1,7 +1,9 @@
 package com.aorise.study;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
+import android.renderscript.Allocation;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import com.aorise.autocompletesearch.SearchAdapter;
 import com.baidu.location.BDAbstractLocationListener;
@@ -16,6 +19,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -42,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
     private BaiduMap mBaiduMap;
     private LocationClient mLocationClient;
     private DistrictSearch mDistrictSearch ;
+    private double Currentlatitude , CurrentLongtitude;
     private static final String[] Permissions = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
     //private List<String> datas = new ArrayList<>();
 
@@ -76,13 +81,19 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
     private void initLocation(){
         //定位初始化
         mLocationClient = new LocationClient(this);
-
+        LatLng GEO_HUAIHUA = new LatLng(27.5, 109.95);
+        MapStatusUpdate status2 = MapStatusUpdateFactory.newLatLng(GEO_HUAIHUA);
+        mBaiduMap.setMapStatus(status2);
+        mBaiduMap.setTrafficEnabled(true);
+        MapStatus.Builder builder = new MapStatus.Builder();
+        builder.zoom(10f);
+        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
 //通过LocationClientOption设置LocationClient相关参数
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(100*1000);
-
+        option.setScanSpan(100*1000);//设置扫描周期 100s
+       // option.setIsNeedAddress(true);
 //设置locationClientOption
         mLocationClient.setLocOption(option);
 
@@ -117,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
                     }
                 }
                 mBaiduMap.setMapStatus(MapStatusUpdateFactory
-                        .newLatLngBounds(builder.build()));
+                        .newLatLngBounds(builder.build()));//设置当前位置信息
 
             }
       //  }
@@ -160,7 +171,10 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
     }
 
     public void onclick(View view) {
-        initArea();
+        //initArea();
+        Intent mIntent = new Intent(this,ToolbarTestActivity.class);
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(mIntent);
     }
 
 
@@ -192,6 +206,12 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
             mBaiduMap.animateMapStatus(mMapStatusUpdate);
 
             Log.d("1111", "onReceiveLocation: latitude  "+ latitude + " longitude " +longitude);
+
+            Button mButton = new Button(MainActivity.this);
+            mButton.setBackgroundResource(R.drawable.ic_launcher_foreground);
+            mButton.setText("Umex");
+            InfoWindow mInforWindow = new InfoWindow(mButton,mLatlng,-10);
+            mBaiduMap.showInfoWindow(mInforWindow);
             //获取定位精度，默认值为0.0f
             float radius = location.getRadius();
             //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准

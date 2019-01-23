@@ -36,4 +36,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation files('libs/BaiduLBS_Android.jar')
     implementation project(':AutoCompleteSearView')
+    implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.android.support:gridlayout-v7:28.0.0'
+    //Tool bar view
+    implementation 'com.android.support:design:28.0.0'
 }

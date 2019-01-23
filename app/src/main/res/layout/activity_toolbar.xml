@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="toolbarimage"
+            type="com.aorise.study.toolbar.bean.ImageResource">
+        </variable>
+    </data>
+<android.support.design.widget.CoordinatorLayout
+     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:fitsSystemWindows="true">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="?attr/colorPrimary"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:collapsedTitleGravity="center_horizontal"
+            app:expandedTitleGravity="right"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed|exitUntilCollapsed">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="Title"
+                />
+            <ImageView
+                android:fitsSystemWindows="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/timg"
+                app:layout_collapseMode="parallax"
+                android:scaleType="centerCrop"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/status_gradient"
+                app:layout_collapseMode="pin"
+                android:fitsSystemWindows="true" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:textSize="110dp"
+        android:text="dd
+        ddddddddd
+        ddddd
+        dd
+        ddd
+        d
+        dd
+        ddddd
+        dddddds
+        akd
+        jakljsdk
+        sdkfjh
+        sjkd
+        fhkjs
+        dhfkj
+        hsdfj
+        kshaj
+        kdfhj
+        ksdh
+        fkjsd
+        hfi
+        uwhef
+        kjndiufns
+kjfksdjfklhsadjfhnkajsdhnfjksdnfkjadhsf
+fjksdjfklsdfjkshdfkjhsdfskldf
+dfjklsadjflksjdflksadjkfj
+dklsfjklasdflkjdwjfoismndklfjh
+sdfkjsaomfdi0owjefknsdoifjowmerfiosjdfo
+dsjfomwfiojsdif
+jwejfosjdfoijewoifjosidfjosadjfow
+jwejfosjdfoijewoifjosidfjosadjfow
+jwejfosjdfoijewoifjosidfjosadjfow
+jwejfosjdfoijewoifjosidfjosadjfow
+jwejfosjdfoijewoifjosidfjosadjfow
+jwejfosjdfoijewoifjosidfjosadjfow
+jwejfosjdfoijewoifjosidfjosadjfow
+jwejfosjdfoijewoifjosidfjosadjfow
+jwejfosjdfoijewoifjosidfjosadjfow
+jwejfosjdfoijewoifjosidfjosadjfow
+jwejfosjdfoijewoifjosidfjosadjfow
+
+"/>
+</android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
+</layout>
