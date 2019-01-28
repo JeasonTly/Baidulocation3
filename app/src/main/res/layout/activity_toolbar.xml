@@ -53,52 +53,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <TextView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:textSize="110dp"
-        android:text="dd
-        ddddddddd
-        ddddd
-        dd
-        ddd
-        d
-        dd
-        ddddd
-        dddddds
-        akd
-        jakljsdk
-        sdkfjh
-        sjkd
-        fhkjs
-        dhfkj
-        hsdfj
-        kshaj
-        kdfhj
-        ksdh
-        fkjsd
-        hfi
-        uwhef
-        kjndiufns
-kjfksdjfklhsadjfhnkajsdhnfjksdnfkjadhsf
-fjksdjfklsdfjkshdfkjhsdfskldf
-dfjklsadjflksjdflksadjkfj
-dklsfjklasdflkjdwjfoismndklfjh
-sdfkjsaomfdi0owjefknsdoifjowmerfiosjdfo
-dsjfomwfiojsdif
-jwejfosjdfoijewoifjosidfjosadjfow
-jwejfosjdfoijewoifjosidfjosadjfow
-jwejfosjdfoijewoifjosidfjosadjfow
-jwejfosjdfoijewoifjosidfjosadjfow
-jwejfosjdfoijewoifjosidfjosadjfow
-jwejfosjdfoijewoifjosidfjosadjfow
-jwejfosjdfoijewoifjosidfjosadjfow
-jwejfosjdfoijewoifjosidfjosadjfow
-jwejfosjdfoijewoifjosidfjosadjfow
-jwejfosjdfoijewoifjosidfjosadjfow
-jwejfosjdfoijewoifjosidfjosadjfow
 
-"/>
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
 </layout>

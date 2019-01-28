@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
 
     public void onclick(View view) {
         //initArea();
-        Intent mIntent = new Intent(this,ToolbarTestActivity.class);
+        Intent mIntent = new Intent(this,Xrecycle_Vlayout.class);
         mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mIntent);
     }
