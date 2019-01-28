@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.LayoutHelper;
@@ -31,6 +32,7 @@ import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
@@ -119,6 +121,12 @@ public class Xrecycle_Vlayout extends AppCompatActivity implements BaseRefreshLi
                     banner.setIndicatorGravity(BannerConfig.CENTER);
                     //banner设置方法全部调用完毕时最后调用
                     banner.start();
+                    banner.setOnBannerListener(new OnBannerListener() {
+                        @Override
+                        public void OnBannerClick(int position) {
+                            Toast.makeText(Xrecycle_Vlayout.this," Press image " + position,Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
             }
@@ -274,8 +282,15 @@ public class Xrecycle_Vlayout extends AppCompatActivity implements BaseRefreshLi
 
 
         @Override
-        protected void onBindViewHolderWithOffset(MainViewHolder holder, int position, int offsetTotal) {
+        protected void onBindViewHolderWithOffset(MainViewHolder holder, final int position, int offsetTotal) {
             ((TextView) holder.itemView.findViewById(R.id.title)).setText(Integer.toString(offsetTotal));
+            ((TextView) holder.itemView.findViewById(R.id.title)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext," Press Text " + (position+1),Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
 
         @Override
