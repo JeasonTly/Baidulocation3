@@ -5,30 +5,27 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import com.alibaba.android.vlayout.DelegateAdapter;
-import com.alibaba.android.vlayout.LayoutHelper;
-import com.alibaba.android.vlayout.VirtualLayoutAdapter;
+
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
+import com.aorise.study.adapter.SubAdapter;
 import com.aorise.study.databinding.ActivityXlayoutBinding;
 import com.bumptech.glide.Glide;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
-import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -44,30 +41,68 @@ import java.util.List;
  * Date: 2019/1/28.
  */
 public class Xrecycle_Vlayout extends AppCompatActivity implements BaseRefreshListener {
-    ActivityXlayoutBinding mDataBinding;
-    Banner BannerView;
+
+    //====================recycleView Vlayout模式所用变量===============
     private List<Integer> images = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
+    private DelegateAdapter delegateAdapter ;
+    private VirtualLayoutManager mVirtualLayoutManager ;
+    List<DelegateAdapter.Adapter> mAdapterList = new LinkedList<>();
+    //====================recycleView Vlayout模式所用变量===============
+
+    //====================DataBindingView变量===========================
+    ActivityXlayoutBinding mDataBinding;
+    //====================Handler主线程更新UI===========================
+    private Handler mHandler;
+    private final int MSG_UPDATE_DATA_LOADMORE = 1001;//加载数据
+    private final int MSG_UPDATE_DATA_REFRESH = 1002;//刷新数据
+    /**
+     * Oncreate函数初始化
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initBannerData();
+        initView();
+        mHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case MSG_UPDATE_DATA_REFRESH:
+                        mDataBinding.pulllayout.finishRefresh();
+                        mDataBinding.xrecycle.getAdapter().notifyDataSetChanged();
+                        Toast.makeText(Xrecycle_Vlayout.this," Refresh Success" ,Toast.LENGTH_SHORT).show();
+                        break;
+                    case MSG_UPDATE_DATA_LOADMORE:
+                        mDataBinding.pulllayout.finishLoadMore();
+                        mDataBinding.xrecycle.getAdapter().notifyDataSetChanged();
+                        Toast.makeText(Xrecycle_Vlayout.this," LoadMore Success" ,Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        };
+    }
 
+
+    private void initView(){
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_xlayout);
         mDataBinding.pulllayout.setRefreshListener(this);
-        VirtualLayoutManager layoutManager = new VirtualLayoutManager(this);
-        final DelegateAdapter delegateAdapter = new DelegateAdapter(layoutManager, true);
-        List<DelegateAdapter.Adapter> mAdapterList = new LinkedList<>();
-        mDataBinding.xrecycle.setAdapter(delegateAdapter);
-        mDataBinding.xrecycle.setLayoutManager(layoutManager);
 
-        // final List<LayoutHelper> helpers = new LinkedList<>();
+
+        //=============================================初始化自定义layout的RecycleView=========================
+        VirtualLayoutManager mVirtualLayoutManager = new VirtualLayoutManager(this);
+        delegateAdapter = new DelegateAdapter(mVirtualLayoutManager, true);
+        mDataBinding.xrecycle.setAdapter(delegateAdapter); //设置委托适配器
+        mDataBinding.xrecycle.setLayoutManager(mVirtualLayoutManager); //设置虚拟布局管理器
+
+        //=============================================初始化自定义layout的RecycleView=========================
         /**
          * A:@tuliyuan 添加banner的布局 @{
          */
-        LinearLayoutHelper mLinearLayoutHelper = new LinearLayoutHelper();
-        mLinearLayoutHelper.setMargin(10,20,10,10);
-        SubAdapter mSub = new SubAdapter(this , mLinearLayoutHelper,1){
+        LinearLayoutHelper mLinearLayoutHelper = new LinearLayoutHelper();//设置单列装的装载样式
+        mLinearLayoutHelper.setMargin(10,20,10,10);//设置边距
+        SubAdapter mSub = new SubAdapter(this , mLinearLayoutHelper,1){//设置自定义的列表模式的布局格式！ 数量为1
             @Override
             public void onViewRecycled(MainViewHolder holder) {
 //                if (holder.itemView instanceof ViewPager) {
@@ -137,28 +172,28 @@ public class Xrecycle_Vlayout extends AppCompatActivity implements BaseRefreshLi
         /**
          * A:@tuliyuan 添加banner的布局 @}
          */
-
+        //=============================================
 
         /**
          * A:@tuliyuan 添加grid的布局 @{
          */
         GridLayoutHelper layoutHelper = new GridLayoutHelper(4);
-        layoutHelper.setAutoExpand(true);
-        layoutHelper.setItemCount(8);
+        //layoutHelper.setSpanCount(4);//设置表格的一行有多少个数据，上面在GridLayoutHelper已经设置
+        layoutHelper.setAutoExpand(true); //无法填充满的时候 自动等分划分布局
+        layoutHelper.setItemCount(8); //设置传入的数量
         mAdapterList.add(new SubAdapter(this,layoutHelper,layoutHelper.getItemCount()));
         /**
          * A:@tuliyuan 添加grid的布局 @}
          */
+        //=============================================
         /**
          * A:@tuliyuan 添加列表布局 @{
          */
-        /**
-         * A:@tuliyuan 添加列表布局 @{
-         */
-        LinearLayoutHelper list = new LinearLayoutHelper();
-        list.setMargin(0,10,0,1);
+        LinearLayoutHelper list = new LinearLayoutHelper();//设置单个的列表容器
+        list.setMargin(0,10,0,1);//设置边距
         mAdapterList.add(new SubAdapter(this , list,17,
                 new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100)));
+        //设置自定义的列表模式的布局格式！ 数量为17，layoutparam自定义，并且添加进入委托适配器中
         /**
          * A:@tuliyuan 添加列表布局 @}
          */
@@ -166,15 +201,9 @@ public class Xrecycle_Vlayout extends AppCompatActivity implements BaseRefreshLi
          * A:@tuliyuan add finally just one line
          *
          */
-        delegateAdapter.setAdapters(mAdapterList);
+        delegateAdapter.setAdapters(mAdapterList);///委托适配器获取各样式的适配器进行装载与数据统计
 
-        mDataBinding.xrecycle.addItemDecoration(new RecyclerView.ItemDecoration() {
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.set(10, 10, 10, 10);
-            }
-        });
     }
-
 
     @Override
     protected void onStart() {
@@ -206,117 +235,16 @@ public class Xrecycle_Vlayout extends AppCompatActivity implements BaseRefreshLi
 
     @Override
     public void refresh() {
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                }catch(Exception e){
-                    e.printStackTrace();
-                }finally {
-
-                }
-
-            }
-        }.start();
-        mDataBinding.pulllayout.finishRefresh();
-        mDataBinding.xrecycle.getAdapter().notifyDataSetChanged();
+        Message msg = new Message();
+        msg.what = MSG_UPDATE_DATA_REFRESH;
+        mHandler.sendMessageDelayed(msg,2000);
     }
 
     @Override
     public void loadMore() {
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                }catch(Exception e){
-                    e.printStackTrace();
-                }finally {
-
-                }
-            }
-        }.start();
-        mDataBinding.pulllayout.finishLoadMore();
-        mDataBinding.xrecycle.getAdapter().notifyDataSetChanged();
+        Message msg = new Message();
+        msg.what = MSG_UPDATE_DATA_LOADMORE;
+        mHandler.sendMessageDelayed(msg,2000);
     }
 
-    static class SubAdapter extends DelegateAdapter.Adapter<MainViewHolder> {
-
-        private Context mContext;
-
-        private LayoutHelper mLayoutHelper;
-
-
-        private VirtualLayoutManager.LayoutParams mLayoutParams;
-        private int mCount = 0;
-
-
-        public SubAdapter(Context context, LayoutHelper layoutHelper, int count) {
-            this(context, layoutHelper, count, new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
-        }
-
-        public SubAdapter(Context context, LayoutHelper layoutHelper, int count, @NonNull VirtualLayoutManager.LayoutParams layoutParams) {
-            this.mContext = context;
-            this.mLayoutHelper = layoutHelper;
-            this.mCount = count;
-            this.mLayoutParams = layoutParams;
-        }
-
-        @Override
-        public LayoutHelper onCreateLayoutHelper() {
-            return mLayoutHelper;
-        }
-
-        @Override
-        public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new MainViewHolder(LayoutInflater.from(mContext).inflate(R.layout.text, parent, false));
-        }
-
-        @Override
-        public void onBindViewHolder(MainViewHolder holder, int position) {
-            // only vertical
-            holder.itemView.setLayoutParams(
-                    new VirtualLayoutManager.LayoutParams(mLayoutParams));
-        }
-
-
-        @Override
-        protected void onBindViewHolderWithOffset(MainViewHolder holder, final int position, int offsetTotal) {
-            ((TextView) holder.itemView.findViewById(R.id.title)).setText(Integer.toString(offsetTotal));
-            ((TextView) holder.itemView.findViewById(R.id.title)).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(mContext," Press Text " + (position+1),Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return mCount;
-        }
-    }
-
-
-    static class MainViewHolder extends RecyclerView.ViewHolder {
-
-        public static volatile int existing = 0;
-        public static int createdTimes = 0;
-        private ViewDataBinding viewDataBinding;
-        public MainViewHolder(View itemView) {
-            super(itemView);
-            createdTimes++;
-            existing++;
-        }
-
-
-
-        @Override
-        protected void finalize() throws Throwable {
-            existing--;
-            super.finalize();
-        }
-    }
 }
