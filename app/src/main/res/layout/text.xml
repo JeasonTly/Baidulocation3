@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="studensinfo"
+            type="com.aorise.study.network.basebean.StudentInfo">
+        </variable>
+        <variable
+            name="adpter"
+            type="com.aorise.study.adapter.VlayoutAdapter">
+        </variable>
+        <variable
+            name="postion"
+            type="int">
+        </variable>
+    </data>
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -6,6 +21,8 @@
     android:layout_gravity="center"
     android:id="@+id/title"
     android:textAlignment="center"
-    android:text="DDDDDDD"
+    android:text="@{studensinfo.toString()}"
     android:textColor="#000000"
-    android:textSize="20dp"/>
+    android:textSize="20dp"
+    android:onClick="@{()->adpter.onItemClick(postion)}"/>
+</layout>
