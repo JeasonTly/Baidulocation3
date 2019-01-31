@@ -1,13 +1,17 @@
 package com.aorise.study.query.vm.adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.aorise.study.BR;
+import com.aorise.study.R;
+import com.aorise.study.adapter.BaseViewHolder;
 import com.aorise.study.base.LogT;
 
 import java.util.ArrayList;
@@ -19,8 +23,10 @@ import java.util.List;
  */
 public class ContentAdapter<T> extends RecycleComboAdapter {
     private List<T> contentDatas = new ArrayList<>();
-    public ContentAdapter(Context context, int resid, List<T> datas) {
-        super(context, resid, datas);
+    private ViewDataBinding mDataBinding;
+    public ContentAdapter(Context context, List<T> datas) {
+        super(context, datas);
+        contentDatas = datas;
     }
 
     public void setDatas(List<T> contentDatas ) {
@@ -30,15 +36,15 @@ public class ContentAdapter<T> extends RecycleComboAdapter {
     }
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
-        return super.onCreateViewHolder(viewGroup, position);
+    public BaseViewHolder onCreateVH(@NonNull ViewGroup viewGroup, int position) {
+        mDataBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext),R.layout.title,viewGroup,false);
+        return new BaseViewHolder(mDataBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder,final int position) {
-        super.onBindViewHolder(viewHolder, position);
-        getDataBinding().setVariable(BR.titletext,contentDatas.get(position));
-        getDataBinding().executePendingBindings();//必须加入这个更新数据
+    public void onBindVH(@NonNull BaseViewHolder viewHolder,final int position) {
+        mDataBinding.setVariable(BR.titletext,contentDatas.get(position).toString());
+        mDataBinding.executePendingBindings();//必须加入这个更新数据
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

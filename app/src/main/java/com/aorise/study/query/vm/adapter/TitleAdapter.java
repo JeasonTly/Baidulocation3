@@ -1,15 +1,18 @@
 package com.aorise.study.query.vm.adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.aorise.study.BR;
 import com.aorise.study.R;
+import com.aorise.study.adapter.BaseViewHolder;
+import com.aorise.study.base.LogT;
 import com.aorise.study.query.fragment.bean.NewsTitle;
 
 import java.util.ArrayList;
@@ -21,55 +24,49 @@ import java.util.List;
  */
 public class TitleAdapter extends RecycleComboAdapter {
 
-    private List<NewsTitle> titledatas = new ArrayList<>();
-    private int currentPosition = -1;
-    private ContentAdapter mContentAdapter ;
-    public TitleAdapter(Context context, int resid, List<NewsTitle> datas,ContentAdapter contentAdapter) {
-        super(context, resid, datas);
-        this.titledatas = datas;
-        this.mContentAdapter = contentAdapter;
-    }
-    @NonNull
+    private List<NewsTitle> titledatas;
+    private ViewDataBinding mDataBinding;
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
-        return super.onCreateViewHolder(viewGroup, position);
+    public int getItemCount() {
+        return titledatas.size();
+    }
+
+    private int currentPosition = 0;
+    private RecycleItemClick mRecycleViewItemClick;
+    public TitleAdapter(Context context, List<NewsTitle> datas,RecycleItemClick mRecycleViewItemClick) {
+        super(context, datas);
+        this.titledatas = datas;
+        this.mRecycleViewItemClick = mRecycleViewItemClick;
+
+    }
+
+
+    @Override
+    public BaseViewHolder onCreateVH(ViewGroup viewGroup, int i) {
+         mDataBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext),R.layout.title,viewGroup,false);
+        return new BaseViewHolder(mDataBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder,final int position) {
-        super.onBindViewHolder(viewHolder, position);
-        setPosition(position);
-        TextView textView = viewHolder.itemView.findViewById(R.id.news_type_title);
+    public void onBindVH(BaseViewHolder vh, final int position) {
+        TextView textView = vh.itemView.findViewById(R.id.news_type_title);
+        mDataBinding.setVariable(BR.titletext,titledatas.get(position).getNewsType());
+        mDataBinding.executePendingBindings();
         if(currentPosition == position){
             textView.setTextColor(Color.GREEN);
         }else{
             textView.setTextColor(Color.BLUE);
         }
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // LogT.d("点击了标题中的" + " 第 "+ (position+1) + "项" + " datas 为"+datas.get(position).getDatas());
-                mContentAdapter.setDatas(titledatas.get(position).getDatas());
-                setPosition(position);
+                LogT.d("点击了标题中的" + " 第 "+ (position+1) + "项" + " datas 为" + titledatas.get(position).getDatas());
+                currentPosition = position;
+                mRecycleViewItemClick.onTitleItemClick(position);
                 notifyDataSetChanged();
             }
         });
 
     }
-    public List<NewsTitle> getTitledatas() {
-        return titledatas;
-    }
-
-    @Override
-    protected ViewDataBinding getDataBinding() {
-        return super.getDataBinding();
-    }
-    public int getPosition() {
-        return currentPosition;
-    }
-
-    public void setPosition(int position) {
-        this.currentPosition = position;
-    }
-
 }

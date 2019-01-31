@@ -27,6 +27,7 @@ import com.aorise.study.query.fragment.bean.NewsTitleContent;
 import com.aorise.study.query.listener.HttpRquestReturnListener;
 import com.aorise.study.query.vm.NewsVm;
 import com.aorise.study.query.vm.adapter.ContentAdapter;
+import com.aorise.study.query.vm.adapter.RecycleItemClick;
 import com.aorise.study.query.vm.adapter.TitleAdapter;
 import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
 
@@ -38,7 +39,7 @@ import java.util.List;
  * Created by Tuliyuan.
  * Date: 2019/1/31.
  */
-public class NewsFragment extends Fragment implements BaseRefreshListener, HttpRquestReturnListener {
+public class NewsFragment extends Fragment implements BaseRefreshListener, HttpRquestReturnListener, RecycleItemClick {
     private ActivityQueryNewsBinding mDataBinding;
     private List<NewsTitle> datas = new ArrayList<NewsTitle>();
     private ContentAdapter mContentAdapter;
@@ -46,6 +47,7 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
     private Context mContext;
     private NewsVm newsVm;
     private boolean loadmore = false;
+    private TitleAdapter mTitleAdapter ;
     public NewsFragment (){
         super();
         List<NewsTitleContent> titleContents1 = new ArrayList<>();
@@ -104,30 +106,26 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
         mDataBinding = DataBindingUtil.inflate(inflater, R.layout.activity_query_news,container,false);
         mDataBinding.newsPullRefresh.setRefreshListener(this);
         mContext = getContext();
-        initContent();
-        initTitle();
+        initRecycle();
         return mDataBinding.getRoot();
 
     }
-    private void initTitle(){
+    private void initRecycle(){
         if(datas != null && mDataBinding != null ){
             RecyclerView.LayoutManager manager = new LinearLayoutManager(mContext);
+            mTitleAdapter = new TitleAdapter(mContext,datas ,this);
             ((LinearLayoutManager) manager).setOrientation(LinearLayoutManager.HORIZONTAL);
             mDataBinding.newsRecycleviewTitle.setLayoutManager(manager);
-            mDataBinding.newsRecycleviewTitle.setAdapter(new TitleAdapter(mContext,R.layout.title,datas ,mContentAdapter));
-        }
-    }
-    private void initContent(){
-        if(datas != null && mDataBinding != null ){
-            RecyclerView.LayoutManager manager = new LinearLayoutManager(mContext);
-            ((LinearLayoutManager) manager).setOrientation(LinearLayoutManager.VERTICAL);
-            LogT.d("ddddd " + datas.get(currentPosition).getDatas());
-            mContentAdapter = new ContentAdapter(mContext,R.layout.title,datas.get(0).getDatas());
-            mDataBinding.newsRecycleview.setLayoutManager(manager);
+            mDataBinding.newsRecycleviewTitle.setAdapter(mTitleAdapter);
+
+            RecyclerView.LayoutManager ListManager = new LinearLayoutManager(mContext);
+            ((LinearLayoutManager) ListManager).setOrientation(LinearLayoutManager.VERTICAL);
+            LogT.d("ddddd " + datas.get(0).getDatas());
+            mContentAdapter = new ContentAdapter(mContext,datas.get(0).getDatas());
+            mDataBinding.newsRecycleview.setLayoutManager(ListManager);
             mDataBinding.newsRecycleview.setAdapter(mContentAdapter);
         }
     }
-
     @Override
     public void refresh() {
         LogT.d("refresh data");
@@ -294,5 +292,11 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onTitleItemClick(int postion) {
+        LogT.d("position is" + postion);
+        mContentAdapter.setDatas(datas.get(postion).getDatas());
     }
 }
