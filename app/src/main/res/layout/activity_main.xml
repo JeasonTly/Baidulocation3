@@ -11,6 +11,11 @@
     android:layout_height="50dp"
     android:id="@+id/btn1"
     android:onClick="onclick"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/btn2"
+        android:onClick="onclick2"/>
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="50dp"

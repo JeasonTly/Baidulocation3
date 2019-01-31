@@ -174,9 +174,9 @@ public class Xrecycle_Vlayout extends AppCompatActivity implements BaseRefreshLi
          */
         LinearLayoutHelper list = new LinearLayoutHelper();//设置单个的列表容器
         list.setMargin(0,10,0,1);//设置边距
-//        mAdapterList.add(new SubAdapter(this , list,17,
-//                new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100)));
-        mAdapterList.add(new VlayoutAdapter(this,list,studentInfos));
+        mAdapterList.add(new SubAdapter(this , list,17,
+                new VirtualLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100)));
+       // mAdapterList.add(new VlayoutAdapter(this,list,studentInfos));
         //设置自定义的列表模式的布局格式！ 数量为17，layoutparam自定义，并且添加进入委托适配器中
         /**
          * A:@tuliyuan 添加列表布局 @}

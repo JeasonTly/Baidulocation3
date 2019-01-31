@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BaiduLocation</string>
+    <string name="no_datas">无数据!</string>
 </resources>

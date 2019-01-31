@@ -40,6 +40,7 @@
         </activity>
         <activity android:name=".Xrecycle_Vlayout">
         </activity>
+        <activity android:name=".query.QueryActivity"></activity>
     </application>
 
 </manifest>

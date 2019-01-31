@@ -14,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.aorise.autocompletesearch.SearchAdapter;
+import com.aorise.study.query.QueryActivity;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
@@ -176,7 +177,13 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
         mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mIntent);
     }
-
+    public void onclick2(View view) {
+        //initArea();
+        Intent mIntent = new Intent(this, QueryActivity.class);
+        mIntent.putExtra("intent_fragment","");
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(mIntent);
+    }
 
 
     public class MyLocationListener extends BDAbstractLocationListener {
