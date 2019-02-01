@@ -113,17 +113,18 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
     private void initRecycle(){
         if(datas != null && mDataBinding != null ){
             RecyclerView.LayoutManager manager = new LinearLayoutManager(mContext);
-            mTitleAdapter = new TitleAdapter(mContext,datas ,this);
+            mTitleAdapter = new TitleAdapter(mContext,this);
+
             ((LinearLayoutManager) manager).setOrientation(LinearLayoutManager.HORIZONTAL);
             mDataBinding.newsRecycleviewTitle.setLayoutManager(manager);
             mDataBinding.newsRecycleviewTitle.setAdapter(mTitleAdapter);
-
+            mTitleAdapter.setRefrshDatas(datas);
             RecyclerView.LayoutManager ListManager = new LinearLayoutManager(mContext);
             ((LinearLayoutManager) ListManager).setOrientation(LinearLayoutManager.VERTICAL);
-            LogT.d("ddddd " + datas.get(0).getDatas());
-            mContentAdapter = new ContentAdapter(mContext,datas.get(0).getDatas());
+            mContentAdapter = new ContentAdapter(mContext);
             mDataBinding.newsRecycleview.setLayoutManager(ListManager);
             mDataBinding.newsRecycleview.setAdapter(mContentAdapter);
+            mContentAdapter.setRefrshDatas(datas.get(0).getDatas());
         }
     }
     @Override
@@ -159,115 +160,6 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
     }
 
 
-//    class TitleRecycleAdapter extends RecyclerView.Adapter{
-//        ViewDataBinding mTitleDataBinding;
-//
-//        @NonNull
-//        @Override
-//        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-//            mTitleDataBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),R.layout.title,viewGroup,false);
-//            return new BaseViewHolder(mTitleDataBinding);
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-//            LogT.d(" position "+ position + " title " + datas.get(position).getNewsType() + " currentposition is "+currentPosition);
-//            mTitleDataBinding.setVariable(BR.titletext,datas.get(position).getNewsType());
-//            mTitleDataBinding.executePendingBindings();
-//
-//           TextView textView = viewHolder.itemView.findViewById(R.id.news_type_title);
-//            if(currentPosition == position){
-//                textView.setTextColor(Color.GREEN);
-//            }else{
-//                textView.setTextColor(Color.BLUE);
-//            }
-//            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                   // LogT.d("点击了标题中的" + " 第 "+ (position+1) + "项" + " datas 为"+datas.get(position).getDatas());
-//                    mContentAdapter.setDatas(datas.get(position).getDatas());
-//                    mContentAdapter.notifyDataSetChanged();
-//                    setSelectedIndex(position);
-//                    notifyDataSetChanged();
-//                }
-//            });
-//
-//        }
-//        public void setSelectedIndex(int position) {
-//            LogT.d("do select " + position);
-//            currentPosition = position;
-//            notifyDataSetChanged();
-//        }
-//        @Override
-//        public int getItemCount() {
-//            if(datas != null){
-//                return datas.size();
-//            }
-//            return 0;
-//        }
-//    }
-//    class ContentAdapter<T> extends RecyclerView.Adapter{
-//        private final int TYPE_NO_DATAS = 0;
-//        private int Type = -1;
-//        private List<T> contentDatas = new ArrayList<>();
-//        ViewDataBinding mTitleDataBinding;
-//
-//        public ContentAdapter(List<T> datas) {
-//            LogT.d(" 111");
-//            contentDatas.clear();
-//            contentDatas.addAll(datas);
-//            if(datas == null){
-//                LogT.d("no datas 111");
-//                Type = TYPE_NO_DATAS;
-//            }
-//        }
-//        public void setDatas(List<T> datas) {
-//            contentDatas.clear();
-//            contentDatas.addAll(datas);
-//            if(datas == null){
-//                Type = TYPE_NO_DATAS;
-//            }
-//        }
-//        @NonNull
-//        @Override
-//        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-//            if(Type == TYPE_NO_DATAS){
-//                LogT.d("no datas");
-//                mTitleDataBinding =  DataBindingUtil.inflate(LayoutInflater.from(getContext()),R.layout.title,viewGroup,false);
-//                return new BaseViewHolder(mTitleDataBinding);
-//            }
-//            mTitleDataBinding =  DataBindingUtil.inflate(LayoutInflater.from(getContext()),R.layout.title,viewGroup,false);
-//            return new BaseViewHolder(mTitleDataBinding);
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
-//            if(Type == TYPE_NO_DATAS){
-//                mTitleDataBinding.setVariable(BR.titletext,"No Datas");
-//            }else {
-//                LogT.d("点击了标题中的 "+currentPosition + " 第 "+ (i) + "项" + " datas 为" + datas.get(currentPosition).getDatas() );
-//                mTitleDataBinding.setVariable(BR.titletext,datas.get(currentPosition).getDatas().get(i).toString());
-//                mTitleDataBinding.executePendingBindings();//必须加入这个更新数据
-//                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        LogT.d("点击了内容中的" + datas.get(currentPosition).getNewsType() + "中的第" + i + "项目");
-//                    }
-//                });
-//            }
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            if(datas != null){
-//                if(datas.get(currentPosition).getDatas() !=null){
-//                    return datas.get(currentPosition).getDatas().size();
-//                }
-//            }
-//            return 0;
-//        }
-//    }
-
     @Nullable
     @Override
     public View getView() {
@@ -296,7 +188,8 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
 
     @Override
     public void onTitleItemClick(int postion) {
-        LogT.d("position is" + postion);
-        mContentAdapter.setDatas(datas.get(postion).getDatas());
+        LogT.d("position is " + postion + " get datas is " + datas.get(postion).getDatas());
+        mContentAdapter.setRefrshDatas(datas.get(postion).getDatas());
+
     }
 }

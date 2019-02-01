@@ -13,6 +13,7 @@ import com.aorise.study.R;
 import com.aorise.study.adapter.BaseViewHolder;
 import com.aorise.study.base.LogT;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,14 +22,14 @@ import java.util.List;
  */
 public abstract class RecycleComboAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
+
     private List<T> datas;
     private ViewDataBinding mDataBinding;
     public Context mContext;
     private boolean NO_DATAS = false;
-    private static final int VIEW_TYPE_NO_DATAS = 8302;
-    public RecycleComboAdapter(Context context, List<T> datas) {
+    public RecycleComboAdapter(Context context) {
         this.mContext = context;
-        this.datas = datas;
+        this.datas = new ArrayList<>();
         LogT.d("data size "+datas.size());
         if(datas == null && datas.size() == 0){
             NO_DATAS = true;
@@ -57,11 +58,21 @@ public abstract class RecycleComboAdapter<T> extends RecyclerView.Adapter<BaseVi
         return mDataBinding;
     }
 
+    public void setRefrshDatas(List<T> datas){
+        this.datas.clear();
+        this.datas.addAll(datas);
+        notifyDataSetChanged();
+    }
+    public void LoadMoreDatas(List<T> datas){
+        this.datas.addAll(datas);
+        notifyDataSetChanged();
+    }
+    public List<T> getDatas() {
+        return datas;
+    }
+
     @Override
     public int getItemCount() {
-        if(datas == null && datas.size() == 0){
-            return 1;
-        }
-        return 0;
+        return datas.size();
     }
 }

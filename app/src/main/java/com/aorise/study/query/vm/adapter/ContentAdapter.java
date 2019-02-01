@@ -21,19 +21,12 @@ import java.util.List;
  * Created by Tuliyuan.
  * Date: 2019/1/31.
  */
-public class ContentAdapter<T> extends RecycleComboAdapter {
-    private List<T> contentDatas = new ArrayList<>();
+public  class ContentAdapter<T> extends RecycleComboAdapter {
     private ViewDataBinding mDataBinding;
-    public ContentAdapter(Context context, List<T> datas) {
-        super(context, datas);
-        contentDatas = datas;
+    public ContentAdapter(Context context) {
+        super(context);
     }
 
-    public void setDatas(List<T> contentDatas ) {
-        this.contentDatas.clear();
-        this.contentDatas.addAll(contentDatas);
-        notifyDataSetChanged();
-    }
     @NonNull
     @Override
     public BaseViewHolder onCreateVH(@NonNull ViewGroup viewGroup, int position) {
@@ -43,12 +36,13 @@ public class ContentAdapter<T> extends RecycleComboAdapter {
 
     @Override
     public void onBindVH(@NonNull BaseViewHolder viewHolder,final int position) {
-        mDataBinding.setVariable(BR.titletext,contentDatas.get(position).toString());
+        LogT.d(" position is " + position + " data is "+ getDatas().get(position) + " item count is "+getItemCount());
+        mDataBinding.setVariable(BR.titletext,getDatas().get(position).toString());
         mDataBinding.executePendingBindings();//必须加入这个更新数据
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogT.d("点击了内容中的" + contentDatas.get(position)+ "中的第" + position + "项目");
+                LogT.d("点击了内容中的" + getDatas().get(position)+ "中的第" + position + "项目");
             }
         });
     }
@@ -58,8 +52,4 @@ public class ContentAdapter<T> extends RecycleComboAdapter {
         return super.getDataBinding();
     }
 
-    @Override
-    public int getItemCount() {
-        return contentDatas.size();
-    }
 }

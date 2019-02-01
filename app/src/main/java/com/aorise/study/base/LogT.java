@@ -3,6 +3,11 @@ package com.aorise.study.base;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.aorise.study.query.vm.adapter.TitleAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class LogT {
 
     private static final String TAG = "Baidulocation";
@@ -10,7 +15,10 @@ public class LogT {
      * 日志输出等级
      */
     private static int LOG_LEVEL = Log.VERBOSE;
-
+    /**
+     * 此数组中不显示Log数据
+     */
+    private static List<String> LOG_NO_SHOW = new ArrayList<String>();
     /**
      * 是否显示日志
      */
@@ -142,6 +150,7 @@ public class LogT {
         if (elements == null) {
             return "";
         }
+        LOG_NO_SHOW.add(TitleAdapter.class.getName());
         for (StackTraceElement ste : elements) {
             if (ste.isNativeMethod()) {
                 continue;
@@ -150,6 +159,10 @@ public class LogT {
                 continue;
             }
             if (ste.getClassName().equals(LogT.class.getName())) {
+                continue;
+            }
+            if(LOG_NO_SHOW.size() !=0 && LOG_NO_SHOW.contains(ste.getClassName())){
+                //过滤不需要显示log的class文件
                 continue;
             }
             return "  " + ste.getFileName().substring(0, ste.getFileName().indexOf(".")) + "." + ste.getMethodName()
