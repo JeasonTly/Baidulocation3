@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 <Button
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:text="vlayout"
     android:id="@+id/btn1"
     android:onClick="onclick"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/btn2"
+        android:text="news"
         android:onClick="onclick2"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="QRcode"
+        android:id="@+id/btn3"
+        android:onClick="onclick3"/>
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="50dp"

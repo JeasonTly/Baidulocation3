@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="newscontent"
+            type="com.aorise.study.query.fragment.bean.NewsTitleContent"></variable>
+    </data>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bb_ffffff"
+    android:descendantFocusability="blocksDescendants"
+    android:fitsSystemWindows="true"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="13dp"
+        android:paddingTop="@dimen/bb_13dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/bb_16dp"
+                android:layout_marginRight="@dimen/bb_16dp"
+                android:layout_marginTop="@dimen/bb_5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_collection_preview"
+                    android:layout_width="142dp"
+                    android:layout_height="82dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/testx" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/my_collection_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13dp"
+                        android:lines="2"
+                        android:textColor="@color/bb_666666"
+                        android:textSize="@dimen/text_12sp"
+                        tools:text="@{newscontent.date}" />
+
+                    <TextView
+                        android:id="@+id/my_collection_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/bb_11dp"
+                        android:layout_marginLeft="13dp"
+                        android:layout_marginTop="@dimen/bb_8dp"
+                        android:maxLength="20"
+                        android:singleLine="true"
+                        android:textColor="@color/bb_999999"
+                        android:textSize="@dimen/text_11sp"
+                        tools:text="@{newscontent.title}" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_vip"
+                android:layout_width="@dimen/bb_17dp"
+                android:layout_height="@dimen/bb_13dp"
+                android:layout_marginLeft="@dimen/bb_8dp"
+                android:src="@drawable/huanguan"
+                android:visibility="invisible" />
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>
+</layout>

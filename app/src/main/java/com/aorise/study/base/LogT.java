@@ -3,8 +3,6 @@ package com.aorise.study.base;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.aorise.study.query.vm.adapter.TitleAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,7 +148,7 @@ public class LogT {
         if (elements == null) {
             return "";
         }
-        LOG_NO_SHOW.add(TitleAdapter.class.getName());
+      //  LOG_NO_SHOW.add(TitleAdapter.class.getName());
         for (StackTraceElement ste : elements) {
             if (ste.isNativeMethod()) {
                 continue;

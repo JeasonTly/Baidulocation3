@@ -8,9 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.aorise.study.BR;
 import com.aorise.study.R;
-import com.aorise.study.base.LogT;
 import com.aorise.study.databinding.ActivityQueryBinding;
 import com.aorise.study.query.fragment.JobHolderFragment;
 import com.aorise.study.query.fragment.LawsFragment;

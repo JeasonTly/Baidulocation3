@@ -14,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.aorise.autocompletesearch.SearchAdapter;
+import com.aorise.study.QRCode.QRCreateActivity;
 import com.aorise.study.query.QueryActivity;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -181,6 +182,12 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
         //initArea();
         Intent mIntent = new Intent(this, QueryActivity.class);
         mIntent.putExtra("intent_fragment","");
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(mIntent);
+    }
+    public void onclick3(View view){
+        //initArea();
+        Intent mIntent = new Intent(this, QRCreateActivity.class);
         mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mIntent);
     }

@@ -1,6 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <!--状态栏颜色-->
+    <color name="color_status_bar">#ffffff</color>
+    <color name="color_status_bar_black">#000000</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#46d9ac</color>
+    <color name="transparent1">#9000</color>
+    <!--输入框背景色-->
+    <color name="bg_color">#ebf8e8</color>
+    <!--光标颜色-->
+    <color name="cursor_color">#46d9ac</color>
+    <color name="bb_333333">#333333</color>
+    <color name="bb_ffffff">#ffffff</color>
+    <color name="bb_d9d9d9">#d9d9d9</color>
+    <color name="bb_999999">#999999</color>
+    <color name="bb_98999B">#98999B</color>
+    <color name="bb_e71111">#e71111</color>
+
+    <color name="bb_f4f4f4">#f4f4f4</color>
+    <color name="bb_34ddba">#34ddba</color>
+    <color name="bb_ff6666">#ff6666</color>
+    <color name="bb_565656">#565656</color>
+    <color name="bb_3ba1ff">#3ba1ff</color>
+    <color name="bb_fdba4f">#fdba4f</color>
+    <color name="bb_5FB2FF">#5FB2FF</color>
+    <color name="bb_f0f0f0">#f0f0f0</color>
+    <color name="bb_f1f1f1">#f1f1f1</color>
+    <color name="bb_c2c2c2">#c2c2c2</color>
+    <color name="bb_e0e0e0">#e0e0e0</color>
+    <color name="bb_e53f3f">#e53f3f</color>
+    <color name="bb_e10000">#e10000</color>
+    <color name="bb_6b6b6b">#6b6b6b</color>
+    <color name="bb_bbbbbb">#bbbbbb</color>
+    <color name="bb_e6e6e6">#e6e6e6</color>
+    <color name="bb_777777">#777777</color>
+    <color name="bb_46d9ac">#46d9ac</color>
+    <color name="bb_666666">#666666</color>
+    <color name="bb_ff9cd3">#ff9cd3</color>
+    <color name="bb_d5d5d5">#d5d5d5</color>
+    <color name="bb_aeaeae">#aeaeae</color>
+    <color name="bb_000000">#000000</color>
+    <color name="bb_ECECEC">#ececec</color>
+    <color name="bb_dedddd">#dedddd</color>
+    <color name="bb_999a9c">#999a9c</color>
+    <color name="bb_ebebeb">#ebebeb</color>
+    <color name="bb_f96620">#f96620</color>
+    <color name="bb_34dd8a">#34dd8a</color>
+    <color name="bb_f2919d">#f2919d</color>
+    <color name="bb_49c1e7">#49c1e7</color>
+    <color name="bb_ed4039">#ed4039</color>
+    <color name="bb_a8cf38">#a8cf38</color>
+    <color name="bb_f58320">#f58320</color>
+    <color name="bb_8f78bc">#8f78bc</color>
+    <color name="bb_34deba">#34deba</color>
+    <color name="bb_ff824a">#ff824a</color>
+    <color name="bb_f6f6f6">#f6f6f6</color>
+    <color name="bb_47bffe">#47bffe</color>
+    <color name="bb_e0f5ff">#e0f5ff</color>
+    <color name="bb_48befe">#48befe</color>
+    <color name="bb_3b5999">#3b5999</color>
+    <color name="bb_bdbdbd">#bdbdbd</color>
+    <color name="bb_68b737">#68b737</color>
+    <color name="bb_f9671e">#f9671e</color>
+    <color name="bb_dddddd">#dddddd</color>
+    <color name="bb_80ffffff">#80ffffff</color>
+    <color name="bb_a9a9a9">#a9a9a9</color>
 </resources>
