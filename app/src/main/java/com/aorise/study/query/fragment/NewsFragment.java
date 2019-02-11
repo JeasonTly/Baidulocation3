@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class NewsFragment extends Fragment implements BaseRefreshListener, HttpRquestReturnListener, RecycleItemClick {
     private FragmentNewsBinding mDataBinding;
-    private List<NewsTitle> datas = new ArrayList<NewsTitle>();
+    private List<NewsTitle> datas;
     private List<Integer> pstTab = new ArrayList<>();
     private static int currentPosition = 0 ;
 
@@ -43,6 +43,7 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
 
     public NewsFragment(){
         super();
+        initData();
         newsVm = new NewsVm();
         LogT.d("datasize is " + datas.size());
     }
@@ -66,25 +67,22 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_news,container,false);
         mDataBinding.newsRefresh.setRefreshListener(this);
-
-        initData();
             for(int i = 0 ;i < datas.size();i++){
                 NewsTitle title =  datas.get(i);//这是获取第N 种标签的基础数据的数量
                 String titleChar = title.getNewsType();//获取对应标题名称
                 pstTab.add(i);
                 mDataBinding.tabHost.addTab(mDataBinding.tabHost.newTab().setText(titleChar).setTag(i));
             }
-        dataListAdapter = new DataListAdapter(getContext(),datas.get(0).getDatas());
+        dataListAdapter = new DataListAdapter(getContext());
         manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mDataBinding.newsRecycleContent.setLayoutManager(manager);
         mDataBinding.newsRecycleContent.setAdapter(dataListAdapter);
-        mDataBinding.tabHost.getTabAt(0).select();
-        LogT.d("输出数据 "+datas.get(1).getDatas());
+        dataListAdapter.setRefreshData(datas.get(0).getDatas());
         mDataBinding.tabHost.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                LogT.d("输出数据 position " + tab.getPosition());
+                LogT.d("输出数据 position " + tab.getPosition() + " Content is "+ datas.get(tab.getPosition()).getDatas());
                 dataListAdapter.setRefreshData(datas.get(tab.getPosition()).getDatas());
             }
             @Override
@@ -94,12 +92,12 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
         return mDataBinding.getRoot();
     }
     private void initData(){
+        LogT.d(" initdata");
         List<NewsTitleContent> titleContents1 = new ArrayList<>();
         titleContents1.add(new NewsTitleContent("2018-11-21","xx" ,"xxx" , "xxxxxx"));
         titleContents1.add(new NewsTitleContent("2018-11-11","x1x" ,"xx2x" , "xxxx1xx"));
@@ -127,17 +125,17 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
             newsTitleContent = new NewsTitleContent("2015-10-21","xx" + i ,"x2xx" , "xxxxxx");
             titleContents5.add(newsTitleContent);
         }
-
+        datas = new ArrayList<NewsTitle>();
         datas.add(new NewsTitle(0, "Title1",titleContents1));
         datas.add(new NewsTitle(1, "Title2",titleContents2));
         datas.add(new NewsTitle(3, "Title3",titleContents3));
         datas.add(new NewsTitle(4, "Title4",titleContents4));
         datas.add(new NewsTitle(5, "Title5",titleContents5));
-        LogT.d("添加数据 " + new NewsTitle(0, "Title1",titleContents1));
-        LogT.d("添加数据 " + new NewsTitle(1, "Title1",titleContents2));
-        LogT.d("添加数据 " + new NewsTitle(3, "Title1",titleContents3));
-        LogT.d("添加数据 " + new NewsTitle(4, "Title1",titleContents4));
-        LogT.d("添加数据 " + new NewsTitle(5, "Title1",titleContents5));
+//        LogT.d("添加数据 " + new NewsTitle(0, "Title1",titleContents1));
+//        LogT.d("添加数据 " + new NewsTitle(1, "Title1",titleContents2));
+//        LogT.d("添加数据 " + new NewsTitle(3, "Title1",titleContents3));
+//        LogT.d("添加数据 " + new NewsTitle(4, "Title1",titleContents4));
+//        LogT.d("添加数据 " + new NewsTitle(5, "Title1",titleContents5));
 
     }
     @Override
