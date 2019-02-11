@@ -15,6 +15,7 @@ import com.aorise.study.adapter.BaseViewHolder;
 import com.aorise.study.base.LogT;
 import com.aorise.study.query.fragment.bean.NewsTitleContent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,11 +23,11 @@ import java.util.List;
  * Date: 2019/2/1.
  */
 public class DataListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    private List<NewsTitleContent> datas;
+    private List<NewsTitleContent> datas = new ArrayList<>();
     private ViewDataBinding mDataBinding;
     private Context mContext;
-    public DataListAdapter(Context context,List<NewsTitleContent> datas) {
-        this.datas = datas;
+    public DataListAdapter(Context context) {
+       // this.datas = datas;
         this.mContext = context;
     }
 

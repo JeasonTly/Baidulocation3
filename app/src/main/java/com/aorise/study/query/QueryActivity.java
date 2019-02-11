@@ -13,6 +13,7 @@ import com.aorise.study.databinding.ActivityQueryBinding;
 import com.aorise.study.query.fragment.JobHolderFragment;
 import com.aorise.study.query.fragment.LawsFragment;
 import com.aorise.study.query.fragment.NewsFragment;
+import com.aorise.study.query.fragment.NewsFragment1;
 
 /**
  * Created by Tuliyuan.
@@ -58,7 +59,7 @@ public class QueryActivity extends AppCompatActivity {
                     ToolBarTitle = "jobholder";
                     break;
                 case "":
-                    CurrentFragment = new NewsFragment();
+                    CurrentFragment = new NewsFragment1();
                     ToolBarTitle = "news";
                     break;
             }
