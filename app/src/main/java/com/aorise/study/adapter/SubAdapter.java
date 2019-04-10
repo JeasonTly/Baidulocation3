@@ -81,8 +81,8 @@ public class SubAdapter extends DelegateAdapter.Adapter<SubAdapter.MainViewHolde
 
         @Override
         protected void onBindViewHolderWithOffset(MainViewHolder holder, final int position, int offsetTotal) {
-            ((TextView) holder.itemView.findViewById(R.id.title)).setText(Integer.toString(offsetTotal));
-            ((TextView) holder.itemView.findViewById(R.id.title)).setOnClickListener(new View.OnClickListener() {
+            ((TextView) holder.itemView).setText(Integer.toString(offsetTotal));
+            ((TextView) holder.itemView).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(mContext," Press Text " + (position+1),Toast.LENGTH_SHORT).show();

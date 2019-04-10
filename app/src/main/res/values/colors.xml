@@ -66,4 +66,6 @@
     <color name="bb_dddddd">#dddddd</color>
     <color name="bb_80ffffff">#80ffffff</color>
     <color name="bb_a9a9a9">#a9a9a9</color>
+    <color name="light_color">#979797</color>
+    <color name="dark_color">#4A90E2</color>
 </resources>

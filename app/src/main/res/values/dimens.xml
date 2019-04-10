@@ -75,5 +75,6 @@
     <dimen name="text_15sp">15sp</dimen>
     <dimen name="text_18sp">18sp</dimen>
     <dimen name="text_9sp">9sp</dimen>
-
+    <dimen name="crumb_view_padding">12dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

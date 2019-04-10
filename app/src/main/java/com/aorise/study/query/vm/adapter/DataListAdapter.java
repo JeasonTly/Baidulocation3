@@ -26,8 +26,10 @@ public class DataListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<NewsTitleContent> datas = new ArrayList<>();
     private ViewDataBinding mDataBinding;
     private Context mContext;
-    public DataListAdapter(Context context) {
+    private RecycleItemClick recycleItemClick;
+    public DataListAdapter(Context context ,RecycleItemClick recycleItemClick) {
        // this.datas = datas;
+        this.recycleItemClick = recycleItemClick;
         this.mContext = context;
     }
 
@@ -39,11 +41,17 @@ public class DataListAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BaseViewHolder baseViewHolder, int i) {
+    public void onBindViewHolder(@NonNull BaseViewHolder baseViewHolder,final int i) {
         LogT.d("data is "+ datas.get(i));
         //一定要获取baseviewHolder的databinding对象，因为是要针对对应的databinding进行设置
         baseViewHolder.getVBinding().setVariable(BR.newscontent,datas.get(i));
         baseViewHolder.getVBinding().executePendingBindings();
+        baseViewHolder.getVBinding().getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recycleItemClick.onTitleItemClick(i);
+            }
+        });
     }
 
     public void setRefreshData(List<NewsTitleContent> datas){

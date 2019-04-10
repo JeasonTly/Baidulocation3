@@ -22,6 +22,12 @@
         android:text="QRcode"
         android:id="@+id/btn3"
         android:onClick="onclick3"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Contacts"
+        android:id="@+id/btn4"
+        android:onClick="onclick4"/>
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="50dp"

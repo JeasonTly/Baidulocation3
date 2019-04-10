@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProcessBar">
+        <attr name="foreground_color" format="color"/>
+        <attr name="background_color" format="color"></attr>
+        <attr name="text_color" format="color"></attr>
+        <attr name="stroke_width" format="dimension"></attr>
+    </declare-styleable>
+</resources>

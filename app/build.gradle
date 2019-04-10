@@ -15,7 +15,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-    dataBinding{
+    dataBinding {
         enabled = true;
     }
     buildTypes {
@@ -37,12 +37,18 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //add this
+    androidTestImplementation 'com.android.support.test:runner:0.5'
+    androidTestImplementation 'com.android.support.test:rules:0.5'
+    androidTestImplementation 'junit:junit:4.12'
+    // Optional -- Mockito framework（可选，用于模拟一些依赖对象，以达到隔离依赖的效果）
+    androidTestImplementation 'org.mockito:mockito-core:2.19.0'
+    androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     implementation files('libs/BaiduLBS_Android.jar')
     implementation project(':AutoCompleteSearView')
-    implementation 'com.google.zxing:core:3.3.0'
+//    implementation 'com.google.zxing:core:3.3.0'
     implementation 'com.android.support:gridlayout-v7:28.0.0'
     //Tool bar view
-
     //xRecycle + Vlayout 实现常规的界面布局
     //    下拉刷新上拉加载
     implementation 'com.jwenfeng.pulltorefresh:library:1.0.3'
@@ -58,5 +64,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-
+    implementation files('libs/zxing.jar')
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }

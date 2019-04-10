@@ -6,6 +6,7 @@ import com.aorise.study.network.basebean.StudentInfo;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -15,4 +16,7 @@ import retrofit2.http.Query;
 public interface ApiService {
     @GET("api/base/studeninfo")
     Observable<Result<StudentInfo>> getStudentInfo(@Query("id") String id);
+
+    @POST("SendCode")
+    Observable<String> sendCode(@Query("phone") String phone);
 }

@@ -10,4 +10,18 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <declare-styleable name="CrumbViewAttrs">
+        <attr name="light_color" format="color" />
+        <attr name="dark_color" format="color" />
+        <attr name="padding" format="dimension" />
+    </declare-styleable>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

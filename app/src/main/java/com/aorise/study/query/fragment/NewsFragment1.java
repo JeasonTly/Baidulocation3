@@ -161,7 +161,7 @@ public class NewsFragment1 extends Fragment implements  HttpRquestReturnListener
 
         List<NewsTitleContent> titleContents5 = new ArrayList<>();
         NewsTitleContent newsTitleContent;
-        for(int i =0;i<7;i++){
+        for(int i =0;i<17;i++){
             newsTitleContent = new NewsTitleContent("2015-10-21","xx" + i ,"x2xx" , "xxxxxx");
             titleContents5.add(newsTitleContent);
         }
@@ -173,10 +173,6 @@ public class NewsFragment1 extends Fragment implements  HttpRquestReturnListener
         datas.add(new NewsTitle(5, "Title5",titleContents5));
 
     }
-
-
-
-
 
 
     @Nullable

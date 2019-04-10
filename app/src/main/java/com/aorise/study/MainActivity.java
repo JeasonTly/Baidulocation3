@@ -2,19 +2,19 @@ package com.aorise.study;
 
 import android.Manifest;
 import android.content.Intent;
-import android.graphics.Color;
-import android.renderscript.Allocation;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.aorise.autocompletesearch.SearchAdapter;
 import com.aorise.study.QRCode.QRCreateActivity;
+import com.aorise.study.contact.ContactsActivity;
 import com.aorise.study.query.QueryActivity;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -40,7 +40,6 @@ import com.baidu.mapapi.search.district.DistrictSearchOption;
 import com.baidu.mapapi.search.district.OnGetDistricSearchResultListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnGetDistricSearchResultListener {
@@ -48,26 +47,45 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
     private BaiduMap mBaiduMap;
     private LocationClient mLocationClient;
     private DistrictSearch mDistrictSearch ;
+    private AutoCompleteTextView mAutoCompleteTextView;
     private double Currentlatitude , CurrentLongtitude;
     private static final String[] Permissions = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
+    private String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CALL_PHONE,Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION};
+    List<String> mPermissionList = new ArrayList<>();
     //private List<String> datas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActivityCompat.requestPermissions(this,Permissions,2032);
+//        ActivityCompat.requestPermissions(this,Permissions,2032);
         mMapView = (MapView)findViewById(R.id.baidumap);
        // datas = Arrays.asList(getResources().getStringArray(R.array.region));
         String[] datas = getResources().getStringArray(R.array.region);
         Log.d(this.getClass().getName(), "onCreate: datas "+datas.length);
-        AutoCompleteTextView mAutoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.auto);
+        mAutoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.auto);
         mAutoCompleteTextView.setAdapter(new SearchAdapter<String>(this,android.R.layout.simple_list_item_1,datas,-1));
         mBaiduMap = mMapView.getMap();
 
         mBaiduMap.setMyLocationEnabled(true);
         initLocation();
+        if (Build.VERSION.SDK_INT > 23) {
+            mPermissionList.clear();//清空没有通过的权限
+            for (int i = 0; i < permissions.length; i++) {
+                if (ActivityCompat.checkSelfPermission(this, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
+                    mPermissionList.add(permissions[i]);//添加还未授予的权限
+                }
+            }
 
+            //申请权限
+            if (mPermissionList.size() > 0) {//有权限没有通过，需要申请
+                ActivityCompat.requestPermissions(this, permissions, 2040);
+            } else {
+                //说明权限都已经通过，可以做你想做的事情去
+            }
+        }
         //显示卫星图层
         //mBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
 
@@ -172,6 +190,9 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
         super.onRestart();
     }
 
+    public void setAutoText(String str){
+        mAutoCompleteTextView.setText(str);
+    }
     public void onclick(View view) {
         //initArea();
         Intent mIntent = new Intent(this,Xrecycle_Vlayout.class);
@@ -187,7 +208,13 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
     }
     public void onclick3(View view){
         //initArea();
-        Intent mIntent = new Intent(this, QRCreateActivity.class);
+        Intent mIntent = new Intent(this, CustomViewActivity.class);
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(mIntent);
+    }
+    public void onclick4(View view){
+        //initArea();
+        Intent mIntent = new Intent(this, ContactsActivity.class);
         mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mIntent);
     }

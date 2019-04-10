@@ -73,7 +73,7 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
                 pstTab.add(i);
                 mDataBinding.tabHost.addTab(mDataBinding.tabHost.newTab().setText(titleChar).setTag(i));
             }
-        dataListAdapter = new DataListAdapter(getContext());
+        dataListAdapter = new DataListAdapter(getContext(),this);
         manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mDataBinding.newsRecycleContent.setLayoutManager(manager);
@@ -97,6 +97,7 @@ public class NewsFragment extends Fragment implements BaseRefreshListener, HttpR
         return mDataBinding.getRoot();
     }
     private void initData(){
+
         LogT.d(" initdata");
         List<NewsTitleContent> titleContents1 = new ArrayList<>();
         titleContents1.add(new NewsTitleContent("2018-11-21","xx" ,"xxx" , "xxxxxx"));

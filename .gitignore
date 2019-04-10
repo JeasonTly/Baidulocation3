@@ -11,7 +11,7 @@
 .externalNativeBuild
 AutoCompleteSearView/build/
 /AutoCompleteSearView/build/
-.idea/gradle.xml
-.idea/misc.xml
-.idea/runConfigurations.xml
-.idea/vcs.xml
+/.idea/gradle.xml
+/.idea/misc.xml
+/.idea/runConfigurations.xml
+/.idea/vcs.xml
