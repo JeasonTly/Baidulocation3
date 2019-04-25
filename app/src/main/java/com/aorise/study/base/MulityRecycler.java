@@ -1,5 +1,6 @@
 package com.aorise.study.base;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class MulityRecycler {
     private boolean isExpanded;
     private boolean isSelected;
     private String content;
-    private List<MulityRecycler> data;
+    private ArrayList<MulityRecycler> data;
 
     public MulityRecycler(int id, int parentId, String content) {
         this.id = id;
@@ -62,11 +63,11 @@ public class MulityRecycler {
         this.content = content;
     }
 
-    public List<MulityRecycler> getData() {
+    public ArrayList<MulityRecycler> getData() {
         return data;
     }
 
-    public void setData(List<MulityRecycler>  data) {
+    public void setData(ArrayList<MulityRecycler>  data) {
         this.data = data;
     }
     public int getPosition() {

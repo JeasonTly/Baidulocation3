@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
     private RecyclerView mRecycler;
-    private List<MulityRecycler> DATAS = new ArrayList<>();
+    private ArrayList<MulityRecycler> DATAS = new ArrayList<>();
     private MulityDataAdapter mulityDataAdapter;
 
     @Override
@@ -24,24 +24,24 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         mRecycler = (RecyclerView) findViewById(R.id.recycle);
         MulityRecycler mBase = new MulityRecycler(0, 0, "Title");
-        List<MulityRecycler> datas = new ArrayList<>();
-        List<MulityRecycler> senconddatas = new ArrayList<>();
-        List<MulityRecycler> thriddatas = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        ArrayList<MulityRecycler> datas = new ArrayList<>();
+        ArrayList<MulityRecycler> senconddatas = new ArrayList<>();
+        ArrayList<MulityRecycler> thriddatas = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            MulityRecycler data = new MulityRecycler(i, 0, "Title" + "." + 0 + "." + i);
+            for (int m = 0; m < 2; m++) {
+                    MulityRecycler senconddata = new MulityRecycler(m, i, "Title" + "." + 0 + "." + i + "." + m);
+                    for (int n = 0; n < 2; n++) {
+                        LogT.d("i is " + i);
+                        LogT.d("m is " + m);
+                        LogT.d("n is " + n);
 
-            MulityRecycler data = new MulityRecycler(0, 0, "Title" + "." + 0 + "." + i);
-            for (int m = 0; m < 10; m++) {
+                        MulityRecycler thriddata = new MulityRecycler(n, m, "Title" + "." + 0 + "." + i + "." + m + "." + n);
+                        thriddatas.add(thriddata);
+                    }
+                    senconddata.setData(thriddatas);
+                    senconddatas.add(senconddata);
 
-                MulityRecycler senconddata = new MulityRecycler(0, 0, "Title" + "." + 0 + "." + i + "." + m);
-                for (int n = 0; n < 10; n++) {
-                    LogT.d("i is " + i);
-                    LogT.d("m is " + m);
-                    LogT.d("n is " + n);
-                    MulityRecycler thriddata = new MulityRecycler(0, 0, "Title" + "." + 0 + "." + i + "." + m + "." + n);
-                    thriddatas.add(thriddata);
-                }
-                senconddata.setData(thriddatas);
-                senconddatas.add(senconddata);
             }
             data.setData(senconddatas);
             datas.add(data);
