@@ -25,14 +25,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".query.Main2Activity"></activity>
+
         <receiver
             android:name=".MyReceiver"
-            android:process=":process_alarm"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true"
+            android:process=":process_alarm">
             <intent-filter>
-                <action android:name="com.write.file">
-                </action>
+                <action android:name="com.write.file"></action>
             </intent-filter>
         </receiver>
 

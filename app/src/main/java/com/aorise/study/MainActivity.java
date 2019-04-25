@@ -15,6 +15,7 @@ import android.widget.Button;
 import com.aorise.autocompletesearch.SearchAdapter;
 import com.aorise.study.QRCode.QRCreateActivity;
 import com.aorise.study.contact.ContactsActivity;
+import com.aorise.study.query.Main2Activity;
 import com.aorise.study.query.QueryActivity;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -183,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
+
     }
 
     @Override
@@ -195,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
     }
     public void onclick(View view) {
         //initArea();
-        Intent mIntent = new Intent(this,Xrecycle_Vlayout.class);
+        Intent mIntent = new Intent(this, Main2Activity.class);
         mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mIntent);
     }
