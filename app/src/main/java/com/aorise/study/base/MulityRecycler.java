@@ -1,17 +1,29 @@
 package com.aorise.study.base;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Tuliyuan.
  * Date: 2019/4/25.
  */
 public class MulityRecycler {
+    @Override
+    public String toString() {
+        return "MulityRecycler{" +
+                "id=" + id +
+                ", parentId=" + parentId +
+                ", position=" + position +
+                ", isExpanded=" + isExpanded +
+                ", isSelected=" + isSelected +
+                ", content='" + content + '\'' +
+                ", data=" + data +
+                '}';
+    }
+
     private int id ;
     private int parentId;
     private int position;
-
+    private MulityRecycler parentData;
     private boolean isExpanded;
     private boolean isSelected;
     private String content;
@@ -21,6 +33,14 @@ public class MulityRecycler {
         this.id = id;
         this.parentId = parentId;
         this.content = content;
+    }
+
+    public MulityRecycler getParentData() {
+        return parentData;
+    }
+
+    public void setParentData(MulityRecycler parentData) {
+        this.parentData = parentData;
     }
 
     public int getId() {

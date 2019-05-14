@@ -8,6 +8,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         SDKInitializer.initialize(getApplicationContext());
+
         super.onCreate();
     }
 }

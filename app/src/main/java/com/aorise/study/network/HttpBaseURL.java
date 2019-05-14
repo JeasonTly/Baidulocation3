@@ -6,5 +6,7 @@ package com.aorise.study.network;
  */
 public class HttpBaseURL {
 //    public static final String BASER_URL = "http://192.168.1.41:8081/";
-    public static final String BASER_URL = "http://47.92.70.33/pingche/Home/ajax/";
+//    public static final String BASER_URL = "http://192.168.1.41:6600/";
+    public static final String BASE_URL = "http://192.168.1.118:8400/";//沈智维
+//    public static final String BASER_URL = "http://47.92.70.33/pingche/Home/ajax/";
 }

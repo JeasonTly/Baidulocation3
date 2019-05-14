@@ -1,9 +1,15 @@
 package com.aorise.study;
 
 import android.Manifest;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +23,8 @@ import com.aorise.study.QRCode.QRCreateActivity;
 import com.aorise.study.contact.ContactsActivity;
 import com.aorise.study.query.Main2Activity;
 import com.aorise.study.query.QueryActivity;
+import com.aorise.study.toolbar.bean.TestLiveData;
+import com.aorise.study.toolbar.bean.TestModel;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
@@ -50,20 +58,20 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
     private DistrictSearch mDistrictSearch ;
     private AutoCompleteTextView mAutoCompleteTextView;
     private double Currentlatitude , CurrentLongtitude;
-    private static final String[] Permissions = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
     private String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.CALL_PHONE,Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION};
+                    Manifest.permission.ACCESS_COARSE_LOCATION,};
     List<String> mPermissionList = new ArrayList<>();
-    //private List<String> datas = new ArrayList<>();
+    private Button btn1;
+    private TestModel mTestModel;
+    private TestLiveData mTestLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        ActivityCompat.requestPermissions(this,Permissions,2032);
         mMapView = (MapView)findViewById(R.id.baidumap);
-       // datas = Arrays.asList(getResources().getStringArray(R.array.region));
+        btn1 = (Button)findViewById(R.id.btn1);
         String[] datas = getResources().getStringArray(R.array.region);
         Log.d(this.getClass().getName(), "onCreate: datas "+datas.length);
         mAutoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.auto);
@@ -88,7 +96,21 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
             }
         }
         //显示卫星图层
-        //mBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
+        //mBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);ACCESS_FINE_LOCATION
+        initVariable();
+
+    }
+    private void initVariable(){
+        final Observer<Location> statusObserver = new Observer<Location>() {
+            @Override
+            public void onChanged(@Nullable Location location) {
+                btn1.setText(location.getLatitude() +"--" +location.getLongitude());
+            }
+        };
+//        mTestModel = ViewModelProviders.of(this).get(TestModel.class);
+//        mTestModel.getStatus().observe(this,statusObserver);
+        mTestLiveData = TestLiveData.getInstance(this);
+        mTestLiveData.observe(this,statusObserver);
 
     }
     private void initArea(){
@@ -99,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
                 .cityName("怀化市")
                 .districtName("鹤城区"));
     }
+
     private void initLocation(){
         //定位初始化
         mLocationClient = new LocationClient(this);
@@ -184,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
-
+//        mTestModel.getStatus().setValue("onResume++++");
     }
 
     @Override
@@ -197,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements OnGetDistricSearc
     }
     public void onclick(View view) {
         //initArea();
-        Intent mIntent = new Intent(this, Main2Activity.class);
+        Intent mIntent = new Intent(this, Main3Activity.class);
         mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(mIntent);
     }

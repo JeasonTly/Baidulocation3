@@ -29,25 +29,12 @@ public class MulityDataAdapter extends RecyclerView.Adapter<MulityDataAdapter.Ba
     public MulityDataAdapter(final ArrayList<MulityRecycler> datas, final Context context) {
         alldatas = datas;
         adapter = this;
+        mContext = context;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         itemClick = new MulityDataItemClick() {
             @Override
             public void itemClick(int position) {
-                LogT.d(" position content is " + alldatas.get(position).getContent() + " position is "
-                        + position);
-                if(alldatas.get(position).getData() == null || alldatas.get(position).getData().size() == 0){
-                    LogT.d("show Tost");
-                    Toast.makeText(context, alldatas.get(position).getContent(), Toast.LENGTH_SHORT).show();
-                }
-                if (alldatas.get(position).isExpanded()) {
-                    if (alldatas.get(position).getData() != null && alldatas.get(position).getData().size() != 0) {
-                        MulityRecyclerHelper.FlodList(alldatas.get(position), adapter, position);
-                    }
 
-                } else {
-
-                    MulityRecyclerHelper.ExpandedList(alldatas.get(position), adapter, position);
-                }
             }
         };
     }
@@ -63,12 +50,25 @@ public class MulityDataAdapter extends RecyclerView.Adapter<MulityDataAdapter.Ba
     public void onBindViewHolder(MulityDataAdapter.BaseViewHolder viewHolder, final int position) {
         TextView title = (TextView) viewHolder.itemView.findViewById(R.id.mulity_title);
         TextView content = (TextView) viewHolder.itemView.findViewById(R.id.mulity_content);
-        title.setText(alldatas.get(position).getParentId() + "." + alldatas.get(position).getId());
+        title.setText("            ");
         content.setText(alldatas.get(position).getContent());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClick.itemClick(position);
+
+                LogT.d(" position content is " + alldatas.get(position) + " position is "
+                        + position + "");
+                if (alldatas.get(position).getData() == null || alldatas.get(position).getData().size() == 0) {
+                    LogT.d("show Tost");
+                    Toast.makeText(mContext, alldatas.get(position).getContent(), Toast.LENGTH_SHORT).show();
+                }
+                if (alldatas.get(position).isExpanded()) {
+                    if (alldatas.get(position).getData() != null && alldatas.get(position).getData().size() != 0) {
+                        MulityRecyclerHelper.FlodList(alldatas.get(position), adapter, position);
+                    }
+                } else {
+                    MulityRecyclerHelper.ExpandedList(alldatas.get(position), adapter, position);
+                }
             }
         });
     }
@@ -86,7 +86,6 @@ public class MulityDataAdapter extends RecyclerView.Adapter<MulityDataAdapter.Ba
     }
 
     public void ExpandList(List<MulityRecycler> datas, int position) {
-        // this.alldatas.addAll(position, datas);
         if (position == alldatas.size() - 1) {
             alldatas.addAll(datas);
         } else {
@@ -100,8 +99,6 @@ public class MulityDataAdapter extends RecyclerView.Adapter<MulityDataAdapter.Ba
         for (MulityRecycler d : alldatas) {
             LogT.d(" d is " + d.getContent());
         }
-//        List<MulityRecycler> delete = datas.subList(position + 1, (datas.size() + position + 1));
-//        alldatas.removeAll(delete);
         alldatas.subList(position + 1, position + 1 + datas.size()).clear();
         LogT.d("alldatas size is  " + alldatas.size());
         notifyDataSetChanged();
